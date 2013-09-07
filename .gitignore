@@ -230,3 +230,4 @@ logs
 /Symfony/app/config/parameters.yml
 vendor
 .idea
+/.idea/workspace.xml

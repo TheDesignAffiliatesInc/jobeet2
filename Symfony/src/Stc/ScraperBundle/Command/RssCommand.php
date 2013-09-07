@@ -47,11 +47,8 @@ class RssCommand extends ContainerAwareCommand
 
             $links[] = $parser->parse_array($data,"<link>","</link>");
         }
-        $links = $links[0];
+        //print_r($data);
 
-        foreach ($links as $link) {
-            $feedsHarvestedModel->save($link);
-        }
 
     }
 }

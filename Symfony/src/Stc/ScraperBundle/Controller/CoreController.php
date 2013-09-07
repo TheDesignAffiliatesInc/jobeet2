@@ -6,19 +6,31 @@ namespace Stc\ScraperBundle\Controller;
 use Stc\ScraperBundle\Entity\ScrapeContent;
 use Stc\ScraperBundle\Entity\ScrapeStatus;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Goutte\Client;
 
 class CoreController extends Controller
 {
     public function indexAction()
     {
+        $parser = $this->get('stc_scraper.parser');
+        $linksHarvestedModel = $this->get('stc_scraper.model.links_feeds_harvested');
         $contentLogic = $this->get('stc_scraper.logic.content');
         $contentModel = $this->get('stc_scraper.model.content');
+        $client = new Client();
+        $crawler =  $client->request('GET', 'http://www.famousdead.com/');
+        $link = $crawler->selectLink('FDDB Listing')->link();
+        $crawler = $client->click($link);
+        //print_r($crawler->filter('a'));
+        $html = $crawler->html();
+        foreach ($parsed_link = $parser->parse_array($html,"<a","</a>") as $url) {
+            $linksHarvestedModel->save($url);
+        }
         //print_r($contentLogic);exit;
 
-        $results = $contentLogic->startFeedScraper();
-        echo "<pre>";
-        print_r($results);exit;
-        echo "</pre>";
+        //$results = $contentLogic->startFeedScraper();
+        //echo "<pre>";
+        //print_r($results);exit;
+        //echo "</pre>";
 
 /*
         $scrapeStatus = new ScrapeStatus();

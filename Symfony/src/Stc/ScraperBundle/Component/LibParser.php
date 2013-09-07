@@ -94,8 +94,8 @@ class LibParser
      ***********************************************************************/
     function return_between($string, $start, $stop, $type)
     {
-        $temp = split_string($string, $start, AFTER, $type);
-        return split_string($temp, $stop, BEFORE, $type);
+        $temp = $this->split_string($string, $start, AFTER, $type);
+        return $this->split_string($temp, $stop, BEFORE, $type);
     }
 
     /***********************************************************************
